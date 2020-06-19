@@ -5,7 +5,7 @@
         alt="DeepLegal"
         class="shrink mr-2"
         contain
-        src="@/assets/logo.png"
+        :src="logo"
         transition="scale-transition"
         width="120"
       />
@@ -45,6 +45,9 @@ export default {
     };
   },
   computed: {
+    logo(){
+      return require(`@/assets/${this.darkMode ? 'logo-dark' : 'logo'}.png`)
+    },
     darkMode: {
       get() {
         return this.$store.getters.darkMode;
@@ -69,7 +72,7 @@ export default {
 
 <style lang="scss">
 .lang-selector {
-  width: 100px;
+  width: 80px;
   margin-right: 1rem !important;
 }
 </style>

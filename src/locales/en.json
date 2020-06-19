@@ -5,5 +5,7 @@
     "País": "Country",
     "Moneda": "Currency",
     "Hora": "Time",
-    "Ver Todos": "See All"
+    "Ver Todos": "See All",
+    "Todas": "All",
+    "Columnas por Página": "Rows per Page"
   }

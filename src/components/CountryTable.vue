@@ -1,13 +1,14 @@
 <template>
   <v-data-table
+    class="elevation-1"
     :headers="headers"
     :items="filteredCountries"
     :loading="$apollo.loading"
-    class="elevation-1"
+    :footer-props="{ 'items-per-page-options': [10, 25, 50, -1], 'items-per-page-text': $t('Columnas por Página'), 'items-per-page-all-text': $t('Todas')}"
   >
-    <template v-slot:item.name="{ item }">{{ lang == 'es' ? item.nameTranslations[0].value : item.name }}</template>
+    <template v-slot:item.name="{ item }">{{ getTranslatedName(item) }}</template>
     <template
-      v-slot:item.currency="{ item }"
+      v-slot:item.currencies[0].name="{ item }"
     >{{ item.currencies[0].name }} ({{item.currencies[0].symbol}})</template>
     <template v-slot:item.time="{ item }">{{ item.timezones[0].name | time }}</template>
   </v-data-table>
@@ -34,8 +35,8 @@ export default {
           value: "flag.emoji"
         },
         { text: this.$t("País"), value: "name" },
-        { text: this.$t("Moneda"), value: "currency" },
-        { text: this.$t("Hora"), value: "time" }
+        { text: this.$t("Moneda"), value: "currencies[0].name" },
+        { text: this.$t("Hora"), value: "time", sortable: false }
       ]
     };
   },
@@ -78,14 +79,23 @@ export default {
       });
     }
   },
+  methods: {
+    getTranslatedName(item) {
+      if (this.lang == "es" && item.nameTranslations.length) {
+        return item.nameTranslations[0].value;
+      } else {
+        return item.name;
+      }
+    }
+  },
   filters: {
     time(value) {
       const d = new Date();
       const utc = d.getTime() + d.getTimezoneOffset() * 60000;
       const offset = value
         .replace("UTC", "")
-        .replace(":", ".")
-        .replace("3", "5");
+        .replace(":3", ":5")
+        .replace(":", ".");
       const nd = new Date(utc + 3600000 * offset);
 
       return `${nd.getHours().pad(2)}:${nd.getMinutes().pad(2)}`;
