@@ -7,6 +7,12 @@ module.exports = {
     apollo: {
       enableMocks: true,
       enableEngine: true
+    },
+    i18n: {
+      locale: 'es',
+      fallbackLocale: 'es',
+      localeDir: 'locales',
+      enableInSFC: true
     }
   }
 }

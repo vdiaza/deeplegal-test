@@ -59,6 +59,7 @@ export default {
         return this.$store.getters.lang;
       },
       set(value) {
+        this.$i18n.locale = value
         this.$store.dispatch("SET_LANG", value);
       }
     }

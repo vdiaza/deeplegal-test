@@ -65,6 +65,9 @@ export default new Vuex.Store({
           query {
             countries: Country {
               name
+              nameTranslations(filter: { languageCode_in: ["es"] }) {
+                value
+              }
               subregion {
                 _id
                 name
@@ -76,6 +79,7 @@ export default new Vuex.Store({
               currencies {
                 _id
                 name
+                symbol
               }
               flag {
                 emoji
@@ -121,6 +125,8 @@ export default new Vuex.Store({
             currencies: Currency {
               _id
               name
+              symbol
+              code
             }
           }
         `,

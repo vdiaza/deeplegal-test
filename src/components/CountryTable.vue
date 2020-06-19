@@ -5,6 +5,10 @@
     :loading="$apollo.loading"
     class="elevation-1"
   >
+    <template v-slot:item.name="{ item }">{{ lang == 'es' ? item.nameTranslations[0].value : item.name }}</template>
+    <template
+      v-slot:item.currency="{ item }"
+    >{{ item.currencies[0].name }} ({{item.currencies[0].symbol}})</template>
     <template v-slot:item.time="{ item }">{{ item.timezones[0].name | time }}</template>
   </v-data-table>
 </template>
@@ -21,6 +25,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      headerKey: 0,
       headers: [
         {
           text: "",
@@ -28,14 +33,14 @@ export default {
           sortable: false,
           value: "flag.emoji"
         },
-        { text: "País", value: "name" },
-        { text: "Moneda", value: "currencies[0].name" },
-        { text: "Hora", value: "time" }
+        { text: this.$t("País"), value: "name" },
+        { text: this.$t("Moneda"), value: "currency" },
+        { text: this.$t("Hora"), value: "time" }
       ]
     };
   },
   computed: {
-    ...mapGetters(["currency", "countries", "region", "search"]),
+    ...mapGetters(["currency", "countries", "region", "search", "lang"]),
     filteredCountries() {
       const query = this.search.toLowerCase();
       if (!this.countries.length) return [];
@@ -43,15 +48,24 @@ export default {
         let currency = true,
           name = true,
           region = true;
-        if (this.currency) {
-          currency = item.currencies[0]._id == this.currency;
+        if (this.currency && item.currencies.length) {
+          currency = false;
+          item.currencies.map(item => {
+            if (item._id == this.currency) {
+              currency = true;
+            }
+          });
         }
         if (this.region && item.subregion) {
           region = item.subregion._id == this.region;
         }
         if (query.length) {
+          let countryName = item.name;
+          if (this.lang == "es" && item.nameTranslations.length) {
+            countryName = item.nameTranslations[0].value;
+          }
           name =
-            item.name
+            countryName
               .toString()
               .toLowerCase()
               .normalize("NFD")

@@ -2,11 +2,11 @@
   <div class="filters">
     <v-row>
       <v-col cols="12" sm="6" lg="4">
-        <v-text-field label="Buscar por país" v-model="search" outlined></v-text-field>
+        <v-text-field :label="$t('Buscar por país')" v-model="search" outlined></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" lg="4">
         <v-select
-          label="Filtrar por moneda"
+          :label="$t('Filtrar por moneda')"
           outlined
           v-model="currency"
           :items="currencies"
@@ -17,16 +17,19 @@
           <template v-slot:prepend-item>
             <v-list-item @click="emptySelection('currency')">
               <v-list-item-content>
-                <v-list-item-title>Select All</v-list-item-title>
+                <v-list-item-title>{{$t('Ver Todos')}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-divider class="mt-2"></v-divider>
+          </template>
+            <template v-slot:item="{item}">
+              {{ item.name }} ({{item.symbol}})
           </template>
         </v-select>
       </v-col>
       <v-col cols="12" sm="6" lg="4">
         <v-select
-          label="Filtrar por zona"
+          :label="$t('Filtrar por zona')"
           outlined
           v-model="region"
           :items="regions"
@@ -37,7 +40,7 @@
           <template v-slot:prepend-item>
             <v-list-item @click="emptySelection('region')">
               <v-list-item-content>
-                <v-list-item-title>Select All</v-list-item-title>
+                <v-list-item-title>{{$t('Ver Todos')}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-divider class="mt-2"></v-divider>
