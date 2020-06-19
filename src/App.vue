@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app :dark="$store.getters.darkMode">
+    <Navbar />
+    <v-main>
+      <CountryFilter :currencies="[]" />
+      <CountryTable :items="[]" />
+    </v-main>
+    <v-footer absolute app class="d-flex justify-center">
+      <span>© 2020</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CountryFilter from "./components/CountryFilter";
+import CountryTable from "./components/CountryTable";
+import Navbar from "./components/Navbar";
 
 export default {
-  name: 'App',
+  name: "App",
+
   components: {
-    HelloWorld
+    CountryFilter,
+    CountryTable,
+    Navbar
+  },
+
+  mounted() {
+    this.$store.dispatch("FETCH_INITIAL_DATA");
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+.v-main {
+  width: 1200px;
+  max-width: calc(100% - 30px);
+  margin: 2.5rem auto;
 }
 </style>
