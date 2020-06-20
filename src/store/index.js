@@ -2,6 +2,8 @@ import Vue from "vue"
 import Vuex from "vuex"
 import gql from "graphql-tag"
 import { apolloClient } from "@/apollo-vue"
+import $vuetify from '@/plugins/vuetify'
+import $i18n from '@/i18n'
 
 Vue.use(Vuex)
 
@@ -56,9 +58,12 @@ export default new Vuex.Store({
   },
   actions: {
     SET_MODE({ commit }, payload) {
+      $vuetify.framework.theme.isDark = payload;
       commit("SET_MODE", payload)
     },
     SET_LANG({ commit }, payload) {
+      $vuetify.framework.lang.current = payload
+      $i18n.locale = payload;
       commit("SET_LANG", payload)
     },
     SET_SEARCH({ commit }, payload) {

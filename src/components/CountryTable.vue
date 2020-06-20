@@ -4,7 +4,7 @@
     :headers="headers"
     :items="filteredCountries"
     :loading="countriesLoading"
-    :footer-props="{ 'items-per-page-options': [10, 25, 50, -1], 'items-per-page-text': $t('Columnas por Página'), 'items-per-page-all-text': $t('Todas')}"
+
   >
     <template v-slot:item.name="{ item }">{{ getTranslatedName(item) }}</template>
     <template
