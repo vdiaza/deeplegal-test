@@ -5,15 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "apollo": "vue-cli-service apollo:dev --generate-schema",
-    "apollo:schema:generate": "vue-cli-service apollo:schema:generate",
-    "apollo:schema:publish": "vue-cli-service apollo:schema:publish",
-    "apollo:start": "vue-cli-service apollo:start",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "apollo-boost": "^0.4.9",
     "core-js": "^3.6.5",
     "graphql-type-json": "^0.2.1",
     "lowdb": "^1.0.0",

@@ -3,7 +3,7 @@
     class="elevation-1"
     :headers="headers"
     :items="filteredCountries"
-    :loading="$apollo.loading"
+    :loading="countriesLoading"
     :footer-props="{ 'items-per-page-options': [10, 25, 50, -1], 'items-per-page-text': $t('Columnas por Página'), 'items-per-page-all-text': $t('Todas')}"
   >
     <template v-slot:item.name="{ item }">{{ getTranslatedName(item) }}</template>
@@ -41,7 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currency", "countries", "region", "search", "lang"]),
+    ...mapGetters(["currency", "countries", "region", "search", "lang", "countriesLoading"]),
     filteredCountries() {
       const query = this.search.toLowerCase();
       if (!this.countries.length) return [];

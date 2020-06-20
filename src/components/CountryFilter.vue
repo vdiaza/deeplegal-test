@@ -2,7 +2,13 @@
   <div class="filters">
     <v-row>
       <v-col cols="12" sm="6" lg="4">
-        <v-text-field :label="$t('Buscar por país')" v-model="search" outlined></v-text-field>
+        <v-text-field
+          :label="$t('Buscar por país')"
+          v-model="search"
+          outlined
+          :append-icon="search ? 'mdi-close' : ''"
+          @click:append="search = ''"
+        ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" lg="4">
         <v-select
@@ -13,6 +19,7 @@
           item-text="name"
           item-value="_id"
           ref="currency"
+          :loading="currenciesLoading"
         >
           <template v-slot:prepend-item>
             <v-list-item @click="emptySelection('currency')">
@@ -22,9 +29,7 @@
             </v-list-item>
             <v-divider class="mt-2"></v-divider>
           </template>
-            <template v-slot:item="{item}">
-              {{ item.name }} ({{item.symbol}})
-          </template>
+          <template v-slot:item="{item}">{{ item.name }} ({{item.symbol}})</template>
         </v-select>
       </v-col>
       <v-col cols="12" sm="6" lg="4">
@@ -36,6 +41,7 @@
           item-text="name"
           item-value="_id"
           ref="region"
+          :loading="regionsLoading"
         >
           <template v-slot:prepend-item>
             <v-list-item @click="emptySelection('region')">
@@ -56,11 +62,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   computed: {
-    currencies() {
-      return this.$store.getters.currencies;
-    },
+    ...mapGetters(["currencies", "currenciesLoading", "regionsLoading"]),
     regions() {
       const regions = [];
       this.$store.getters.regions.map(item => {
@@ -97,10 +102,10 @@ export default {
     }
   },
   methods: {
-      emptySelection(value){
-          this[value] = null
-          this.$refs[value].blur();
-      }
+    emptySelection(value) {
+      this[value] = null;
+      this.$refs[value].blur();
+    }
   }
 };
 </script>

@@ -13,8 +13,11 @@ export default new Vuex.Store({
     lang: "es",
     search: "",
     countries: [],
+    countriesLoading: false,
     regions: [],
+    regionsLoading: false,
     currencies: [],
+    currenciesLoading: false,
     region: null,
     currency: null,
   },
@@ -31,14 +34,23 @@ export default new Vuex.Store({
     SET_COUNTRIES(state, payload) {
       state.countries = payload
     },
+    SET_COUNTRIES_LOADING(state, payload) {
+      state.countriesLoading = payload
+    },
     SET_REGIONS(state, payload) {
       state.regions = payload
+    },
+    SET_REGIONS_LOADING(state, payload) {
+      state.regionsLoading = payload
     },
     SET_REGION(state, payload) {
       state.region = payload
     },
     SET_CURRENCIES(state, payload) {
       state.currencies = payload
+    },
+    SET_CURRENCIES_LOADING(state, payload) {
+      state.currenciesLoading = payload
     },
     SET_CURRENCY(state, payload) {
       state.currency = payload
@@ -60,6 +72,7 @@ export default new Vuex.Store({
       dispatch("FETCH_CURRENCIES")
     },
     async FETCH_COUNTRIES({ commit }) {
+      commit("SET_COUNTRIES_LOADING", true)
       const response = await apolloClient.query({
         query: gql`
           query {
@@ -91,13 +104,14 @@ export default new Vuex.Store({
           }
         `,
       })
-
+      commit("SET_COUNTRIES_LOADING", false)
       commit("SET_COUNTRIES", response.data.countries)
     },
     async SET_REGION({ commit }, payload) {
       commit("SET_REGION", payload)
     },
     async FETCH_REGIONS({ commit }) {
+      commit("SET_REGIONS_LOADING", true)
       const response = await apolloClient.query({
         query: gql`
           query {
@@ -112,13 +126,14 @@ export default new Vuex.Store({
           }
         `,
       })
-      // response.data.regions.unshift({ name: "", _id: null })
+      commit("SET_REGIONS_LOADING", false)
       commit("SET_REGIONS", response.data.regions)
     },
     async SET_CURRENCY({ commit }, payload) {
       commit("SET_CURRENCY", payload)
     },
     async FETCH_CURRENCIES({ commit }) {
+      commit("SET_CURRENCIES_LOADING", true)
       const response = await apolloClient.query({
         query: gql`
           query {
@@ -131,7 +146,7 @@ export default new Vuex.Store({
           }
         `,
       })
-      // response.data.currencies.unshift({ name: "", _id: null })
+      commit("SET_CURRENCIES_LOADING", false)
       commit("SET_CURRENCIES", response.data.currencies)
     },
   },
@@ -139,9 +154,12 @@ export default new Vuex.Store({
     darkMode: (state) => state.darkMode,
     lang: (state) => state.lang,
     countries: (state) => state.countries,
+    countriesLoading: (state) => state.countriesLoading,
     regions: (state) => state.regions,
+    regionsLoading: (state) => state.regionsLoading,
     region: (state) => state.region,
     currencies: (state) => state.currencies,
+    currenciesLoading: (state) => state.currenciesLoading,
     currency: (state) => state.currency,
     search: (state) => state.search,
   },

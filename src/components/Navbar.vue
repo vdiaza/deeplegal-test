@@ -24,6 +24,7 @@
         dense
       ></v-select>
       <v-switch
+        class="switch"
         inset
         v-model="darkMode"
         prepend-icon="mdi-weather-sunny"
@@ -45,8 +46,8 @@ export default {
     };
   },
   computed: {
-    logo(){
-      return require(`@/assets/${this.darkMode ? 'logo-dark' : 'logo'}.png`)
+    logo() {
+      return require(`@/assets/${this.darkMode ? "logo-dark" : "logo"}.png`);
     },
     darkMode: {
       get() {
@@ -62,7 +63,7 @@ export default {
         return this.$store.getters.lang;
       },
       set(value) {
-        this.$i18n.locale = value
+        this.$i18n.locale = value;
         this.$store.dispatch("SET_LANG", value);
       }
     }
@@ -74,5 +75,10 @@ export default {
 .lang-selector {
   width: 80px;
   margin-right: 1rem !important;
+}
+.switch {
+  .v-input__append-outer {
+    margin-left: -5px;
+  }
 }
 </style>
