@@ -56,6 +56,7 @@ export default new Vuex.Store({
       state.currency = payload
     },
   },
+  
   actions: {
     SET_MODE({ commit }, payload) {
       $vuetify.framework.theme.isDark = payload;
@@ -67,7 +68,7 @@ export default new Vuex.Store({
       commit("SET_LANG", payload)
     },
     SET_SEARCH({ commit }, payload) {
-      commit("SET_SEARCH", payload)
+      commit("SET_SEARCH", payload) 
     },
     FETCH_INITIAL_DATA({ dispatch }) {
       dispatch("FETCH_COUNTRIES")
