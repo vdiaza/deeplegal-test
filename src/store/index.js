@@ -1,8 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-
 import gql from "graphql-tag"
-
 import { apolloClient } from "@/apollo-vue"
 
 Vue.use(Vuex)
@@ -84,10 +82,6 @@ export default new Vuex.Store({
               subregion {
                 _id
                 name
-                region {
-                  _id
-                  name
-                }
               }
               currencies {
                 _id

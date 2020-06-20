@@ -15,6 +15,7 @@
 </template>
 
 <script>
+// function for leading zeros
 Number.prototype.pad = function(size) {
   var s = String(this);
   while (s.length < (size || 2)) {
@@ -42,6 +43,7 @@ export default {
   },
   computed: {
     ...mapGetters(["currency", "countries", "region", "search", "lang", "countriesLoading"]),
+    // filter countries by query, currency, and region
     filteredCountries() {
       const query = this.search.toLowerCase();
       if (!this.countries.length) return [];
@@ -80,6 +82,7 @@ export default {
     }
   },
   methods: {
+    // check language and get correct name
     getTranslatedName(item) {
       if (this.lang == "es" && item.nameTranslations.length) {
         return item.nameTranslations[0].value;
@@ -89,6 +92,7 @@ export default {
     }
   },
   filters: {
+    // time filter through UTC
     time(value) {
       const d = new Date();
       const utc = d.getTime() + d.getTimezoneOffset() * 60000;
