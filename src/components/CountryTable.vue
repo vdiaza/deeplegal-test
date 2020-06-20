@@ -10,7 +10,7 @@
     <template
       v-slot:item.currencies[0].name="{ item }"
     >{{ item.currencies[0].name }} ({{item.currencies[0].symbol}})</template>
-    <template v-slot:item.time="{ item }">{{ item.timezones[0].name | time }}</template>
+    <template v-slot:item.time="{ item }">{{ item.timezones[0].name | time }} ({{item.timezones[0].name}})</template>
   </v-data-table>
 </template>
 
